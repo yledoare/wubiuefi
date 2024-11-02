@@ -31,9 +31,14 @@ RUN apt-get update && apt-get install -y make sudo wget unzip
 RUN dpkg --add-architecture i386 && sudo apt update
 RUN apt-get update && apt-get install -y wine32
 RUN apt-get update && apt-get install -y wine
+RUN apt-get update && apt-get install -y efibootmgr grub-efi-amd64-bin grub-efi-amd64-signed libpopt0 mokutil shim-helpers-amd64-signed shim-signed shim-signed-common shim-unsigned
+RUN apt-get update && apt-get install -y gettext
 RUN useradd debian
 RUN usermod -aG sudo debian
+RUN adduser --disabled-password --gecos '' wubi
+RUN adduser wubi sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 RUN mkdir -p /work
 WORKDIR /work
 
-CMD make && tail -f /dev/null
+CMD DISPLAY=:0 make && tail -f /dev/null

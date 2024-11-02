@@ -4,5 +4,6 @@ docker run -ti --rm \
 -w="$(pwd)" \
 -v "$(pwd):$(pwd)"  \
 --user="`id -u`:`id -g`" \
+ -v /tmp/.X11-unix:/tmp/.X11-unix \
 "ydfs-wubi" ${@}
 
